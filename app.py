@@ -39,13 +39,12 @@ vnewdata_median = vnumericdata['Volume'].median()
 
 
 
-
-
 #CLEAN PROF ZHANG DATA USING Z SCORE OF 3
+
 btc_data['zscore'] = (vnumericdata.Volume - vnewdata_mean) / vnewdata_std
 #print(btc_data[btc_data['zscore']>3])
 #print(btc_data[btc_data['zscore']<-3])
-
+print(btc_data.head())
 btc_data_no_outliers = btc_data[(btc_data.zscore < 3) & (btc_data.zscore > -3)]
 cleaned_data = btc_data_no_outliers.astype({'Volume' : 'float'})
 cleaned_data_mean = cleaned_data['Volume'].mean()
@@ -64,7 +63,11 @@ cleaned_data_med = cleaned_data['Volume'].median()
 
 
 
+
+
+
 #read from the bitcoin price data (taken from Yahoo Finance)
+
 yfdata = yf.download("BTC-USD", start = "2018-01-01", end = "2021-04-20", interval = "1d")
 yfdata.to_csv("btcprice.csv")
 btc_price_data = pd.read_csv('btcprice.csv',
@@ -92,6 +95,21 @@ low_price_std = pricenumericdata['Low'].std()
 low_price_max = pricenumericdata['Low'].max()
 low_price_min = pricenumericdata['Low'].min()
 low_price_med = pricenumericdata['Low'].median()
+
+#print high data
+#print("Average high price:", high_price_mean)
+#print("High standard deviation:", high_price_std)
+#print("High max price:", high_price_max)
+#print("High min price:", high_price_min)
+#print("Median high price:", high_price_med)
+
+#print low data
+#print("Average low price:", low_price_mean)
+#print("Low standard deviation:", low_price_std)
+#print("Low max price:", low_price_max)
+#print("Low min price:", low_price_min)
+#print("Median low price:", low_price_med)
+
 
 
 #CLEAN YAHOO FINANCE DATA USING Z SCORE OF 3
@@ -134,18 +152,6 @@ cleanlprice_med = cleaned_price_data_l['Low'].median()
 #print("Clean low price median:", cleanlprice_med)
 
 
-#print high data
-#print("Average high price:", high_price_mean)
-#print("High standard deviation:", high_price_std)
-#print("High max price:", high_price_max)
-#print("High min price:", high_price_min)
-#print("Median high price:", high_price_med)
 
-#print low data
-#print("Average low price:", low_price_mean)
-#print("Low standard deviation:", low_price_std)
-#print("Low max price:", low_price_max)
-#print("Low min price:", low_price_min)
-#print("Median low price:", low_price_med)
 
 
