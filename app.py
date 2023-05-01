@@ -160,5 +160,8 @@ plt.ylabel('Price (high)')
 plt.xlabel('Days since 1/1/2018')
 plt.show()
 
-
+plt.plot(btc_lprice_no_outliers.index, btc_lprice_no_outliers.Low)
+plt.ylabel('Price (low)')
+plt.xlabel('Days since 1/1/2018')
+plt.show()
 
