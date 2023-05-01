@@ -44,3 +44,14 @@ print('Size standard deviation:', snewdata_std)
 print('Size max value:', snewdata_max)
 print('Size min value:', snewdata_min)
 print('Size median:', snewdata_median)
+
+btc_price_data = pd.read_csv('btcprice.csv', 
+                             low_memory=False,  
+                             names=["Date", 
+                                    "Open",
+                                    "High",
+                                    "Low",
+                                    "Close",
+                                    "Adj Close",
+                                    "Volume"])
+
