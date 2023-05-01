@@ -44,7 +44,6 @@ vnewdata_median = vnumericdata['Volume'].median()
 btc_data['zscore'] = (vnumericdata.Volume - vnewdata_mean) / vnewdata_std
 #print(btc_data[btc_data['zscore']>3])
 #print(btc_data[btc_data['zscore']<-3])
-print(btc_data.head())
 btc_data_no_outliers = btc_data[(btc_data.zscore < 3) & (btc_data.zscore > -3)]
 cleaned_data = btc_data_no_outliers.astype({'Volume' : 'float'})
 cleaned_data_mean = cleaned_data['Volume'].mean()
@@ -68,7 +67,7 @@ cleaned_data_med = cleaned_data['Volume'].median()
 
 #read from the bitcoin price data (taken from Yahoo Finance)
 
-yfdata = yf.download("BTC-USD", start = "2018-01-01", end = "2021-04-20", interval = "1d")
+yfdata = yf.download("BTC-USD", start = "2018-01-01", end = "2023-04-20", interval = "1d")
 yfdata.to_csv("btcprice.csv")
 btc_price_data = pd.read_csv('btcprice.csv',
                              index_col=False, 
@@ -79,7 +78,8 @@ btc_price_data = pd.read_csv('btcprice.csv',
                                     "Low",
                                     "Close",
                                     "Adj Close",
-                                    "Volume"],skiprows=1)
+                                    "Volume"],
+                                    skiprows=1)
 
 #Analyze high data
 pricenumericdata = btc_price_data.astype({'High' : 'float', 'Low' : 'float'})
@@ -95,6 +95,8 @@ low_price_std = pricenumericdata['Low'].std()
 low_price_max = pricenumericdata['Low'].max()
 low_price_min = pricenumericdata['Low'].min()
 low_price_med = pricenumericdata['Low'].median()
+
+
 
 #print high data
 #print("Average high price:", high_price_mean)
@@ -132,6 +134,7 @@ cleanhprice_min = cleaned_price_data_h['High'].min()
 cleanhprice_max = cleaned_price_data_h['High'].max()
 cleanhprice_med = cleaned_price_data_h['High'].median()
 
+
 #print("Clean high price mean:", cleanhprice_mean)
 #print("Clean high price std:", cleanhprice_std)
 #print("Clean high price max:", cleanhprice_max)
@@ -152,6 +155,10 @@ cleanlprice_med = cleaned_price_data_l['Low'].median()
 #print("Clean low price median:", cleanlprice_med)
 
 
+plt.plot(btc_hprice_no_outliers.index, btc_hprice_no_outliers.High)
+plt.ylabel('Price (high)')
+plt.xlabel('Days since 1/1/2018')
+plt.show()
 
 
 
