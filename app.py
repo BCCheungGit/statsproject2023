@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pickle as pk
+import yfinance as yf
 
 #read from prof zhangs data, using only data after 2018
 btc_data = pd.read_csv('btc.csv', 
@@ -34,8 +34,19 @@ print('Max value:', vnewdata_max)
 print('Min value:', vnewdata_min)
 print('Median of Volume:', vnewdata_median)
 
+#clean prof zhang's data using z-score method.
+vnewdata_upper_limit = vnewdata_mean + (3 * vnewdata_std)
+vnewdata_lower_limit = vnewdata_mean - (3 * vnewdata_std)
+
+
+
+
+
+
 
 #read from the bitcoin price data (taken from Yahoo Finance)
+yfdata = yf.download("BTC-USD", start = "2018-01-01", end = "2021-04-20", interval = "1d")
+yfdata.to_csv("btcprice.csv")
 btc_price_data = pd.read_csv('btcprice.csv', 
                              low_memory=False,  
                              names=["Date", 
@@ -76,3 +87,5 @@ print("Low standard deviation:", low_price_std)
 print("Low max price:", low_price_max)
 print("Low min price:", low_price_min)
 print("Median low price:", low_price_med)
+
+
