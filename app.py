@@ -3,6 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import yfinance as yf
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+import statsmodels.api as sm
+from sklearn.preprocessing import PolynomialFeatures
+
 
 #read from prof zhangs data, using only data after 2018
 btc_data = pd.read_csv('btc.csv', 
@@ -66,7 +71,6 @@ cleaned_data_med = cleaned_data['Volume'].median()
 
 
 #read from the bitcoin price data (taken from Yahoo Finance)
-
 yfdata = yf.download("BTC-USD", start = "2018-01-01", end = "2023-04-20", interval = "1d")
 yfdata.to_csv("btcprice.csv")
 btc_price_data = pd.read_csv('btcprice.csv',
@@ -81,7 +85,8 @@ btc_price_data = pd.read_csv('btcprice.csv',
                                     "Volume"],
                                     skiprows=1)
 
-#Analyze high data
+
+#Analyze high data and low data
 pricenumericdata = btc_price_data.astype({'High' : 'float', 'Low' : 'float'})
 high_price_mean = pricenumericdata['High'].mean()
 high_price_std = pricenumericdata['High'].std()
@@ -155,13 +160,79 @@ cleanlprice_med = cleaned_price_data_l['Low'].median()
 #print("Clean low price median:", cleanlprice_med)
 
 
-plt.plot(btc_hprice_no_outliers.index, btc_hprice_no_outliers.High)
-plt.ylabel('Price (high)')
-plt.xlabel('Days since 1/1/2018')
-plt.show()
+#plt.plot(btc_hprice_no_outliers.index, btc_hprice_no_outliers.High)
+#plt.ylabel('Price (high)')
+#plt.xlabel('Days since 1/1/2018')
+#plt.show()
 
-plt.plot(btc_lprice_no_outliers.index, btc_lprice_no_outliers.Low)
-plt.ylabel('Price (low)')
-plt.xlabel('Days since 1/1/2018')
-plt.show()
+#plt.plot(btc_lprice_no_outliers.index, btc_lprice_no_outliers.Low)
+#plt.ylabel('Price (low)')
+#plt.xlabel('Days since 1/1/2018')
+#plt.show()
 
+
+
+
+
+
+btc_high_only = pd.read_csv('btcprice.csv',
+                            index_col=False,\
+                            low_memory=False,
+                            names=["Date", 
+                                    "Open",
+                                    "High",
+                                    "Low",
+                                    "Close",
+                                    "Adj Close",
+                                    "Volume"],
+                            usecols=["High"],
+                            skiprows=1
+                            )
+btc_high_only.insert(0, 'days', btc_high_only.index)
+print(btc_high_only.head())
+
+
+
+
+
+X = btc_high_only.iloc[:, 0].values.reshape(-1, 1)
+Y = btc_high_only.iloc[:, 1].values.reshape(-1, 1)
+
+model = LinearRegression()
+model.fit(X, Y)
+
+
+
+#plt.scatter(X, Y)
+#plt.plot(X, Y_pred, color = 'red')
+#plt.xlabel("Days Since 1/1/2018")
+#plt.ylabel("Bitcoin Price (USD)")
+#plt.title("Linear Regression Prediction (High)")
+#plt.show()
+
+pr = PolynomialFeatures(degree=4)
+X_poly = pr.fit_transform(X)
+pr.fit(X_poly, Y)
+model2 = LinearRegression()
+model2.fit(X_poly, Y)
+plt.scatter(X, Y)
+plt.xlabel("Days since 1/1/2018")
+plt.ylabel("Bitcoin Price(USD)")
+plt.title("Polynomial Regression Prediction (High)")
+plt.scatter(X, model2.predict(X_poly))
+#plt.show()
+
+coeffecients = np.polyfit(btc_high_only.days, btc_high_only.High, 4)
+
+predicted_y = np.polyval(coeffecients, btc_high_only.days)
+
+SSE = np.sum((btc_high_only.High - predicted_y) ** 2)
+SST = np.sum((btc_high_only.High - np.mean(btc_high_only.High)) ** 2)
+R2 = 1 - (SSE / SST)
+print("R-squared Value:", R2)
+
+
+#X2 = sm.add_constant(X)
+#est = sm.OLS(Y, X2)
+#est2 = est.fit()
+#print(est2.summary())
