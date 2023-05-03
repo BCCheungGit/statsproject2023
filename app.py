@@ -62,8 +62,74 @@ cleaned_data_med = cleaned_data['Volume'].median()
 #print('Median of Volume:', cleaned_data_med)
 
 
+#HOST DATA
+btc_data_2018 = pd.read_csv('btc.csv', 
+                       thousands=',', 
+                       engine='python',
+                       index_col=False,
+                       skiprows=501976 ,
+                       skipfooter= 110141,
+                       names=["Height", 
+                              "Host", 
+                              "Volume", 
+                              "Stripped Size(B)", 
+                              "Size(B)", "Weight", 
+                              "Average Trans Fee_Per_transaction", 
+                              "Block Reward 1", 
+                              "BlocK Reward_Tips", 
+                              "Time"])
+#print(btc_data_2018['Host'].value_counts()[:5])
+#btc_data_2018['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
+#btc_data_no_outliers['Host'].value_counts()[:5].plot(kind='barh', figsize=(8, 6))
+#plt.xlabel("Count", labelpad=14)
+#plt.ylabel("Host", labelpad=14)
+#plt.title("Top Hosts for Mining Bitcoin 2018")
+#plt.show()
 
 
+btc_data_2019 = pd.read_csv('btc.csv', 
+                       thousands=',', 
+                       engine='python',
+                       index_col=False,
+                       skiprows=556475 ,
+                       skipfooter= 55909,
+                       names=["Height", 
+                              "Host", 
+                              "Volume", 
+                              "Stripped Size(B)", 
+                              "Size(B)", "Weight", 
+                              "Average Trans Fee_Per_transaction", 
+                              "Block Reward 1", 
+                              "BlocK Reward_Tips", 
+                              "Time"])
+#print(btc_data_2019['Host'].value_counts()[:5])
+#btc_data_2019['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
+#plt.xlabel("Count", labelpad=14)
+#plt.ylabel("Host", labelpad=14)
+#plt.title("Top Hosts for Mining Bitcoin 2019")
+#plt.show()
+
+
+btc_data_2020_2021 = pd.read_csv('btc.csv', 
+                       thousands=',', 
+                       engine='python',
+                       index_col=False,
+                       skiprows=610708 ,
+                       names=["Height", 
+                              "Host", 
+                              "Volume", 
+                              "Stripped Size(B)", 
+                              "Size(B)", "Weight", 
+                              "Average Trans Fee_Per_transaction", 
+                              "Block Reward 1", 
+                              "BlocK Reward_Tips", 
+                              "Time"])
+print(btc_data_2020_2021['Host'].value_counts()[:5])
+btc_data_2020_2021['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
+plt.xlabel("Count", labelpad=14)
+plt.ylabel("Host", labelpad=14)
+plt.title("Top Hosts for Mining Bitcoin 2020-2021")
+plt.show()
 
 
 #read from the bitcoin price data (taken from Yahoo Finance)
