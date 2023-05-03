@@ -43,9 +43,7 @@ vnewdata_median = vnumericdata['Volume'].median()
 
 
 
-
-#CLEAN PROF ZHANG DATA USING Z SCORE OF 3
-
+#CLEAN PROF ZHANG DATA USING Z SCORE OF 3 
 btc_data['zscore'] = (vnumericdata.Volume - vnewdata_mean) / vnewdata_std
 #print(btc_data[btc_data['zscore']>3])
 #print(btc_data[btc_data['zscore']<-3])
@@ -62,8 +60,6 @@ cleaned_data_med = cleaned_data['Volume'].median()
 #print('Max value:', cleaned_data_max)
 #print('Min value:', cleaned_data_min)
 #print('Median of Volume:', cleaned_data_med)
-
-
 
 
 
@@ -160,6 +156,8 @@ cleanlprice_med = cleaned_price_data_l['Low'].median()
 #print("Clean low price median:", cleanlprice_med)
 
 
+#plot the price with the days, using cleaned price data
+
 #plt.plot(btc_hprice_no_outliers.index, btc_hprice_no_outliers.High)
 #plt.ylabel('Price (high)')
 #plt.xlabel('Days since 1/1/2018')
@@ -174,7 +172,7 @@ cleanlprice_med = cleaned_price_data_l['Low'].median()
 
 
 
-
+#read the 
 btc_high_only = pd.read_csv('btcprice.csv',
                             index_col=False,\
                             low_memory=False,
