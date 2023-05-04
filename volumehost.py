@@ -62,7 +62,7 @@ cleaned_data_med = cleaned_data['Volume'].median()
 #print('Median of Volume:', cleaned_data_med)
 
 
-#HOST DATA
+#GET HOST DATA FROM 2018
 btc_data_2018 = pd.read_csv('btc.csv', 
                        thousands=',', 
                        engine='python',
@@ -78,6 +78,8 @@ btc_data_2018 = pd.read_csv('btc.csv',
                               "Block Reward 1", 
                               "BlocK Reward_Tips", 
                               "Time"])
+
+#GRAPH HOST DATA
 #print(btc_data_2018['Host'].value_counts()[:5])
 #btc_data_2018['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
 #btc_data_no_outliers['Host'].value_counts()[:5].plot(kind='barh', figsize=(8, 6))
@@ -87,6 +89,8 @@ btc_data_2018 = pd.read_csv('btc.csv',
 #plt.show()
 
 
+
+#GET DATA FROM 2019
 btc_data_2019 = pd.read_csv('btc.csv', 
                        thousands=',', 
                        engine='python',
@@ -102,6 +106,8 @@ btc_data_2019 = pd.read_csv('btc.csv',
                               "Block Reward 1", 
                               "BlocK Reward_Tips", 
                               "Time"])
+
+#GRAPH HOST DATA
 #print(btc_data_2019['Host'].value_counts()[:5])
 #btc_data_2019['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
 #plt.xlabel("Count", labelpad=14)
@@ -110,6 +116,7 @@ btc_data_2019 = pd.read_csv('btc.csv',
 #plt.show()
 
 
+#GET HOST DATA FROM 2020-2021
 btc_data_2020_2021 = pd.read_csv('btc.csv', 
                        thousands=',', 
                        engine='python',
@@ -124,6 +131,9 @@ btc_data_2020_2021 = pd.read_csv('btc.csv',
                               "Block Reward 1", 
                               "BlocK Reward_Tips", 
                               "Time"])
+
+
+#GRAPH HOST DATA
 #print(btc_data_2020_2021['Host'].value_counts()[:5])
 btc_data_2020_2021['Host'].value_counts()[:5].plot(kind='barh', figsize = (8,6))
 plt.xlabel("Count", labelpad=14)
